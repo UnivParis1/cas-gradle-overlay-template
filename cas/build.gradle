@@ -92,7 +92,9 @@ task runit {
                 "-Xmx2048M"
                 ]
             args = [
-                "build/libs/cas.war"
+                "build/libs/cas.war",
+                //"--logging.config=file:///webhome/cas5/www/cas-gradle-overlay/etc/cas/config/log4j2.xml",
+                //"--spring.cloud.config.server.native.searchLocations=file:///webhome/cas5/www/cas-gradle-overlay/etc/cas/config"
                 ]
         }
     }
@@ -111,7 +113,9 @@ task runit_debug {
                 "-XX:TieredStopAtLevel=1",
                 // Run debug mode
                 "-Xdebug",
-                "-Xrunjdwp:transport=dt_socket,address=5005,server=y,suspend=y"
+                "-Xrunjdwp:transport=dt_socket,address=5005,server=y,suspend=y",
+                //"--logging.config=file:///webhome/cas5/www/cas-gradle-overlay/etc/cas/config/log4j2.xml",
+                //"--spring.cloud.config.server.native.searchLocations=file:///webhome/cas5/www/cas-gradle-overlay/etc/cas/config"
                 ]
             args = [
                 "build/libs/cas.war",
