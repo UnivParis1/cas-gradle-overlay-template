@@ -1,0 +1,8 @@
+{
+  "@class" : "org.apereo.cas.services.RegexRegisteredService",
+  "serviceId" : "^(http|https|imaps)://.*",
+  "name" : "Welcome",
+  "id" : 1,
+  "description" : "Get the uid attribute from LDAP",
+  "evaluationOrder" : 9999
+}

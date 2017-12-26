@@ -37,6 +37,7 @@ repositories {
 
 dependencies {
     compile "org.apereo.cas:cas-server-webapp-tomcat:${project.'cas.version'}@war"
+    compile "org.apereo.cas:cas-server-support-json-service-registry:${project.'cas.version'}"
 }
 
 task copyConfig(type: Copy, description: "Copy CAS configuration over to /etc/cas/config") {
@@ -47,6 +48,7 @@ task copyConfig(type: Copy, description: "Copy CAS configuration over to /etc/ca
         println "Copied configuration files into /etc/cas/config"
     }
 }
+copyConfig.enabled = false
 
 war {
     dependsOn copyConfig
@@ -66,11 +68,15 @@ task explodeWar(type: Copy, group: "build", description: "Explodes the cas.war")
 task run(group: "build", description: "Run the CAS web application in embedded container mode") {
     dependsOn build
     doLast {
-        def casRunArgs = Arrays.asList(project.'cas.run.jvmArgs'.split(" "))
+        
+        def casRunArgs = Arrays.asList(project."${project.'cas.run.jvmArgs'}".split(" "))
         javaexec {
             main = "-jar";
             jvmArgs = casRunArgs
-            args = ["build/libs/cas.war"]
+            args = [
+                "build/libs/cas.war",
+                "--cas.standalone.config=${project.rootDir}/etc/cas/config"
+            ]
             
             logger.info "Started ${commandLine}"
         }
@@ -85,9 +91,21 @@ task debug(group: "build", description: "Debug the CAS web application in embedd
         javaexec {
             main = "-jar";
             jvmArgs = casDebugArgs
-            args = ["build/libs/cas.war"]
+            args = [
+                "build/libs/cas.war",
+                "--cas.standalone.config=${project.rootDir}/etc/cas/config"
+            ]
             
             logger.info "Started ${commandLine}"
         }
+    }
+}
+
+// You can find your source into ~/.gradle/caches/modules-2/files-2.1
+// needs eclipse plugin dependency
+task buildsource(dependsOn: ['cleanEclipse', 'eclipse']){
+    tasks.findByPath('eclipse').mustRunAfter tasks.findByPath('cleanEclipse')
+    doLast{
+        println '---- CleanEclipse - Eclipse tasks Executed ----'
     }
 }
