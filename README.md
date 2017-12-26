@@ -3,6 +3,11 @@ CAS Gradle Overlay
 Generic CAS gradle war overlay to exercise the latest versions of CAS. This overlay could be freely
 used as a starting template for local CAS gradle war overlays.
 
+## This repository is a customized version from the university of PARIS 1
+
+It will make it easier to create quickly your project and give some configuration example.
+However the base should stay the apereo repository via a "git rebase".
+
 ## Versions
 
 * CAS `5.2.x`
@@ -167,4 +172,17 @@ Invokes the CAS Command Line Shell. For a list of commands either use no argumen
 
 ```bash
 ./build.sh cli
+```
+
+## University PARIS 1 Layer
+
+An init.d script is provided in paris1_layer, you can use it for system automatisation
+
+Copy cas_init.d into /etc/init.d/cas
+
+```bash
+sudo cp paris1_layer/cas_init.d /etc/init.d/cas
+
+# init on server boot start
+update-rc.d cas defaults
 ```
