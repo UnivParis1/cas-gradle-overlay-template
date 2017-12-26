@@ -56,10 +56,10 @@ war {
 }
 
 task explodeWar(type: Copy, group: "build", description: "Explodes the cas.war") {
-    doLast {
-        from zipTree(project.war.outputs.files.singleFile)
-        into "${buildDir}/cas"
-        println "CAS web application artifact exploded into [cas/build/cas]"
+    from zipTree(project.war.outputs.files.singleFile.toString() + ".original")
+    into "${buildDir}/cas"
+    doLast{
+        logger.info "CAS web application artifact exploded into [cas/build/cas]"
     }
 }
 
