@@ -113,5 +113,10 @@ task buildsource(dependsOn: ['cleanEclipse', 'eclipse']){
 task copyWar(type: Copy) {
     include '*.war'
     from "${project.rootDir}/cas/build/libs"
+    into '/opt/tomcat-cas5'
+}
+task copyWar(type: Copy) {
+    include '*.war'
+    from "${project.rootDir}/cas/build/libs"
     into '/opt/tomcat-cas5/webapps'
 }
