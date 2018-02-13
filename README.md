@@ -186,3 +186,37 @@ sudo cp paris1_layer/cas_init.d /etc/init.d/cas
 # init on server boot start
 update-rc.d cas defaults
 ```
+
+### Running it with TOMCAT
+
+You need to install TOMCAT on your server
+
+Define a parameter in TOMCAt, create a file into $tomcat/bin/setenv.sh
+
+```bash
+# You need to give the cas config file path
+# As well those args will be the same as in gradle.properties into 'cas.run.jvmArgs'
+# Replace $CAS_HOME by your project path
+if [ "$1" = start ]; then
+  export CAS_HOME = "/your_path/cas-gradle-overlay"
+  export JAVA_OPTS="$JAVA_OPTS -Dcas.standalone.config=$CAS_HOME/etc/cas/config -Xmx2048M -XX:+TieredCompilation -XX:TieredStopAtLevel=1"
+fi
+```
+
+Build your project as usual
+
+```bash
+./gradlew clean build
+```
+
+Copy your project to webapps folder
+
+```bash
+./gradlew copyWar
+```
+
+Now startup your TOMCAT server
+
+```bash
+ $ $tomcat/bin/startup.sh
+```
