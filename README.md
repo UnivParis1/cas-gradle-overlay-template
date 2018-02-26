@@ -236,6 +236,30 @@ if [ "$1" = start ]; then
 fi
 ```
 
+Activate https with CAS
+Add a new parameter to tomcat conf
+
+tomcat/conf/server.xml
+```xml
+<!-- Add a new parameter  secure="true" -->
+<Connector port="8080" protocol="HTTP/1.1"
+               connectionTimeout="20000"
+               redirectPort="8443" secure="true"/>
+```
+
+In some case, using https protocol you need to add to replicate SpringBoot behavior
+
+tomcat/conf/server.xml
+
+```xml
+        <Valve
+           className="org.apache.catalina.valves.RemoteIpValve"
+           remoteIpHeader="x-forwarded-for"
+           proxiesHeader="x-forwarded-by"
+           protocolHeader="x-forwarded-proto"
+           />
+```
+
 Build your project as usual
 
 ```bash
